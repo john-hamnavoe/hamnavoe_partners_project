@@ -1,0 +1,79 @@
+%focus-style {
+  @apply shadow outline-none border-gray-500;
+
+  box-shadow: 0 0 0 0.2rem theme("colors.gray.200");
+  background-clip: padding-box;
+}
+
+.input {
+  @apply appearance-none block text-sm w-full text-gray-700 border border-gray-400 rounded px-3 leading-tight bg-white shadow-inner;
+  padding-top: .65rem;
+  padding-bottom: .65rem;
+}
+
+.input-sm {
+  @apply appearance-none block w-full h-8 px-2 text-sm text-gray-700 placeholder-gray-600 border border-gray-400 rounded-lg leading-tight bg-white shadow-inner;
+}
+
+.input-checkbox {
+  @apply items-center h-5 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded;
+}
+
+.input:focus,
+.input:hover {
+  @extend %focus-style;
+}
+
+.label {
+  @apply block text-gray-700 text-sm font-bold mb-2;
+}
+
+.label-no-border {
+  @apply block text-gray-700 text-sm font-bold;
+}
+
+
+.select {
+  @apply appearance-none py-3 px-4 pr-8 block w-full bg-white border border-gray-300 text-gray-700 rounded leading-tight;
+  -webkit-appearance: none;
+
+}
+
+.select:focus {
+  @apply outline-none border-gray-400;
+
+  box-shadow: 0 0 0 0.2rem theme("colors.gray.100");
+  background-clip: padding-box;
+}
+
+.caret {
+  @apply pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-800;
+}
+
+.input-group {
+  @apply mb-6;
+}
+
+.input-file {
+    height: auto;
+    z-index: 2;
+    cursor: pointer;
+
+    @apply inline-block opacity-0 pl-0 pr-0 py-3 px-3 overflow-hidden absolute border-none;
+
+    + label {
+      @extend .btn;
+      @extend .btn-default;
+
+      @apply cursor-pointer inline-flex items-center justify-start w-auto;
+
+      * {
+        pointer-events: none;
+      }
+
+      &:focus {
+        outline: 1px dotted #000;
+        outline: -webkit-focus-ring-color auto 5px;
+      }
+  }
+}
