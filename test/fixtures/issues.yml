@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  issue_no: MyString
+  external_no: MyString
+  target_build: MyString
+  author: MyString
+  issue_type: MyString
+  title: MyString
+  issue_status: MyString
+  assigned_to: MyString
+  issue_priority: MyString
+  application_name: MyString
+  project: one
+
+two:
+  issue_no: MyString
+  external_no: MyString
+  target_build: MyString
+  author: MyString
+  issue_type: MyString
+  title: MyString
+  issue_status: MyString
+  assigned_to: MyString
+  issue_priority: MyString
+  application_name: MyString
+  project: two

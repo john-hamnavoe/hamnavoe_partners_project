@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Issue no:</strong>
+  <%= @issue.issue_no %>
+</p>
+
+<p>
+  <strong>Ticket no:</strong>
+  <%= @issue.ticket&.ticket_no %>
+</p>
+
+<p>
+  <strong>External no:</strong>
+  <%= @issue.external_no %>
+</p>
+
+<p>
+  <strong>Target build:</strong>
+  <%= @issue.target_build %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @issue.author %>
+</p>
+
+<p>
+  <strong>Issue type:</strong>
+  <%= @issue.issue_type %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @issue.title %>
+</p>
+
+<p>
+  <strong>Issue status:</strong>
+  <%= @issue.issue_status %>
+</p>
+
+<p>
+  <strong>Assigned to:</strong>
+  <%= @issue.assigned_to %>
+</p>
+
+<p>
+  <strong>Issue priority:</strong>
+  <%= @issue.issue_priority %>
+</p>
+
+<p>
+  <strong>Application name:</strong>
+  <%= @issue.application_name %>
+</p>
+
+
+<%= link_to 'Back', issues_path %>

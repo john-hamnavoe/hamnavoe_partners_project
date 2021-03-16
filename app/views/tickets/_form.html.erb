@@ -1,0 +1,39 @@
+<%= form_with(model: ticket) do |form| %>
+  <% if ticket.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
+      <ul>
+        <% ticket.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="grid grid-cols-2">
+    <div class="px-8 py-12">
+      <div class="field">
+        <%= form.label :ticket_no, class: "label" %>
+        <%= form.text_field :ticket_no, class: "input input-sm", disabled: true %>
+      </div>
+      <div class="field">
+        <%= form.label :title, class: "label" %>
+        <%= form.text_field :title, class: "input input-sm", disabled: true %>
+      </div>
+      <div class="field">
+        <%= form.label :ticket_status, class: "label" %>
+        <%= form.text_field :ticket_status, class: "input input-sm", disabled: true %>
+      </div>
+      <div class="field">
+        <%= form.label :ticket_type, class: "label" %>
+        <%= form.text_field :ticket_type, class: "input input-sm", disabled: true %>
+      </div>
+      <div class="field">
+        <%= form.label :ticket_priority, class: "label" %>
+        <%= form.text_field :ticket_priority, class: "input input-sm", disabled: true %>
+      </div>
+      <div class="actions">
+        <%= form.submit "Save", class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+<% end %>

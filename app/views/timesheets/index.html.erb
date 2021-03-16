@@ -1,0 +1,19 @@
+  <% content_for :toolbar_col_1 do %>
+  <%= link_to new_timesheet_path, class: "btn btn-blue" do %>
+    <span>New Timesheet</span>
+  <% end %>  
+  <% end %>
+
+<div data-controller="timesheets"  id='timesheets' data-reflex-root='#timesheets'>
+  <div class="shadow mt-2 mb-4">
+    <div class="">
+      <%= render 'shared/index_page_top', edit_instance: nil, reflex: "TimesheetReflex", query: @query, hide_new: true %>
+      <div class="">
+        <%= render "table", timesheets: @timesheets, reflex_name: "TimesheetReflex" %>
+      </div>
+    </div>
+    <div class="">
+      <%= render "shared/index_page_paginator", pagy: @pagy, reflex: "TimesheetReflex" %>
+    </div>
+  </div>
+</div>

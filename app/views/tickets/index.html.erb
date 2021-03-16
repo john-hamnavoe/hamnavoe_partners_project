@@ -1,0 +1,19 @@
+<div data-controller="tickets"  id='tickets' data-reflex-root='#tickets'>
+  <div class="card shadow mt-2 mb-4">
+    <div class="card-body">
+      <%= render 'shared/index_page_top', edit_instance: nil, reflex: "TicketReflex", query: @query, hide_new: true %>
+      <div class="row">
+        <%= render "table", tickets: @tickets, reflex_name: "TicketReflex" %>
+      </div>
+    </div>
+    <div class="card-footer">
+      <%= render "shared/index_page_paginator", pagy: @pagy, reflex: "TicketReflex" %>
+    </div>
+  </div>
+</div>
+<%= form_tag import_tickets_path, multipart: true do %>
+  <%= file_field_tag :file, class: "btn btn-blue" %>
+  <div class="btn btn-default">
+    <input type="submit" class="upload"  name="commit" value="Import" data-disable-with="Import">
+  </div>
+<% end %>

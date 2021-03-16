@@ -1,0 +1,20 @@
+<%= hover_table do %>
+  <%= table_head do %>
+    <%= table_row do %>
+      <%= table_column_compact "Start Date" %>
+      <%= table_column_compact "End Date" %>
+      <%= table_column_compact "Hrs" %>
+      <%= table_column_compact %>
+    <% end %>
+  <% end %>
+  <%= table_body  do %>
+    <% timesheets.each do |timesheet| %>
+      <%= table_row do %>
+        <%= table_compact_data timesheet.start %>
+        <%= table_compact_data timesheet.end %>
+        <%= table_compact_data timesheet.time_entries&.sum(:hours) %>        
+        <%= table_compact_data do link_to "Edit", edit_timesheet_path(timesheet), class: "btn btn-default btn-outline text-xs" end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

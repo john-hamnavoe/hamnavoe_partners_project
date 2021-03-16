@@ -1,0 +1,40 @@
+inherit_gem:
+  rubocop-github:
+    - config/default_edge.yml
+    - config/rails_edge.yml
+
+AllCops:
+  Exclude:
+      - 'app/views/reports/**/*'
+      - 'app/views/report_requests/**/*'
+      - 'app/views/**/*.axlsx'
+
+Style/Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false 
+
+Style/ColonMethodCall:
+  Enabled: false 
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
+Style/AndOr:
+  EnforcedStyle: conditionals
+
+Style/Lambda:
+  EnforcedStyle: literal  
+
+Naming/ConstantName:
+  Enabled: false
+
+Style/RedundantReturn:
+  AllowMultipleReturnValues: true
+
+GitHub/RailsControllerRenderPathsExist:
+  Enabled: false 

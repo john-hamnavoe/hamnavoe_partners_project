@@ -1,0 +1,25 @@
+<%= hover_table do %>
+  <%= table_head do %>
+    <%= table_row do %>
+      <%= table_column_compact "Ticket no" %>
+      <%= table_column_compact "Title" %>
+      <%= table_column_compact "Ticket status" %>
+      <%= table_column_compact "Ticket type" %>
+      <%= table_column_compact "Ticket priority" %>
+      <%= table_column_compact "Target Branch" %>      
+    <% end %>
+  <% end %>
+  <%= table_body  do %>
+    <% @tickets.each do |ticket| %>
+      <%= table_row do %>
+        <%= table_compact_data ticket.ticket_no %>
+        <%= table_compact_data ticket.title %>
+        <%= table_compact_data ticket.ticket_status %>
+        <%= table_compact_data ticket.ticket_type %>
+        <%= table_compact_data ticket.ticket_priority %>   
+        <%= table_compact_data ticket.target_branch %>           
+      </tr>
+    <% end %>
+  <% end %>
+<% end %>
+<% end %>

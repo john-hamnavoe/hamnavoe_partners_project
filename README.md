@@ -1,24 +1,25 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Basic tool to help manage a consultancy project I am currently working on, I have a set of issues that need to be managed. 
 
-Things you may want to cover:
+They need to be reconcilled to a set of tickets, need to keep notes on the issues, and record timesheets. 
 
-* Ruby version
+Maybe not much use outwith the project I am working on, however some things that might be of interest in this project for others:
 
-* System dependencies
+  * Import issues and tickets from spreadsheets.
 
-* Configuration
+  * Nested form for time sheet entry.
 
-* Database creation
+  * Stimulus Reflex Searching and Paging
 
-* Database initialization
+  * Tailwind CSS
 
-* How to run the test suite
+  * Devise
 
-* Services (job queues, cache servers, search engines, etc.)
+  * Stimulus Reflex inplace updates
 
-* Deployment instructions
+  * Stimulus Reflex ticket search
 
-* ...
+Stimulus Reflex functionality mostly based on excellent [stimulus reflex expo](https://expo.stimulusreflex.com/)
+
+Nested form based on [go rails screencast](https://gorails.com/episodes/dynamic-nested-forms-with-stimulus-js)

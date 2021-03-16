@@ -1,0 +1,40 @@
+<%= hover_table do %>
+  <%= table_head do %>
+    <%= table_row do %>
+      <%= table_column_compact "Issue no" %>
+      <%= table_column_compact "Ticket no" %>
+      <%= table_column_compact "Ticket state" %>
+      <%= table_column_compact "External no" %>
+      <%= table_column_compact "Notes" %>
+      <%= table_column_compact "Tags" %>
+      <%= table_column_compact "Issue type" %>
+      <%= table_column_compact "Us?" %>
+      <%= table_column_compact "Title" %>
+      <%= table_column_compact "Issue status" %>
+      <%= table_column_compact "Assigned to" %>
+      <%= table_column_compact "Issue priority" %>
+      <%= table_column_compact "Application name" %>
+      <%= table_column_compact %>
+    <% end %>
+  <% end %>
+  <%= table_body  do %>
+    <% issues.each do |issue| %>
+      <%= table_row do %>
+        <%= table_compact_data issue.issue_no %>
+        <%= table_compact_data issue.ticket&.ticket_no%>
+        <%= table_compact_data issue.ticket&.ticket_status%>
+        <%= table_compact_data issue.external_no %>
+        <td><%= tag(:input, type: "text", value: issue.notes,  data: { id: issue.id, reflex: "change->IssueReflex#update_notes" },  class: "h8 p-1 text-sm text-gray-700 placeholder-gray-600 border border-gray-400 rounded-lg leading-tight bg-white shadow-inner" )%> </td>
+        <td><%= tag(:input, type: "text", value: issue.tags,  data: { id: issue.id, reflex: "change->IssueReflex#update_tags" },  class: "h8 p-1 text-sm text-gray-700 placeholder-gray-600 border border-gray-400 rounded-lg leading-tight bg-white shadow-inner" )%> </td>         
+        <%= table_compact_data issue.issue_type %>
+        <%= table_check_box_data !issue.with_customer %>
+        <%= table_compact_data issue.title[0..75] %>
+        <%= table_compact_data issue.issue_status %>
+        <%= table_compact_data issue.assigned_to %>
+        <%= table_compact_data issue.issue_priority %>
+        <%= table_compact_data issue.application_name %>
+        <%= table_compact_data do link_to "Edit", edit_issue_path(issue), class: "btn btn-default btn-outline text-xs" end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

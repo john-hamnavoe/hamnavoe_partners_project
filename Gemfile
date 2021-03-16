@@ -31,6 +31,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry', '~> 0.13.1'
+  gem 'pry-remote', '~> 0.1.8'  
 end
 
 group :development do
@@ -42,6 +44,12 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  # lint
+  gem "rubocop", "0.82.0"
+  gem "rubocop-github", "0.16.0"
+  gem "rubocop-performance", "1.7.0", require: false
+  gem "rubocop-rails", "2.6.0", require: false  
 end
 
 group :test do
@@ -54,8 +62,16 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem "activerecord-import"
+gem 'caxlsx'
+gem 'caxlsx_rails'
 gem 'devise', '~> 4.7', '>= 4.7.3'
 gem 'friendly_id', '~> 5.4', '>= 5.4.1'
-gem 'redis', '~> 4.2', '>= 4.2.2'
-gem 'sidekiq', '~> 6.1', '>= 6.1.2'
 gem 'name_of_person', '~> 1.1', '>= 1.1.1'
+gem "pagy", "~> 3.8", ">= 3.8.3"
+gem 'redis', '~> 4.2', '>= 4.2.2'
+gem "roo", "~> 2.8.0"
+gem "roo-xls"
+gem 'sidekiq', '~> 6.1', '>= 6.1.2'
+gem 'stimulus_reflex', '~> 3.4'

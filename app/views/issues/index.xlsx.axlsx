@@ -1,0 +1,11 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "issues") do |sheet|
+  sheet.add_row ['PractiTestNo',	'AMCS No',	'AMCS Status',	'External No',
+                 'Current Status', 'Next Steps', 'Tags',	'Issue Type',	'Title',	'Issue Status',	'Assigend To',	'With Customer',
+                 'Issue Priority',	'App Name']
+  @issues.each do |line|
+    sheet.add_row [line.issue_no,	line.ticket&.ticket_no,	line.ticket&.ticket_status,	line.external_no,
+                   line.current_status, line.next_steps, line.tags,	line.issue_type,	line.title,	line.issue_status,	line.assigned_to,	line.with_customer,
+                   line.issue_priority, line.application_name,]
+  end
+end

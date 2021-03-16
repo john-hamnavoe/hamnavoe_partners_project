@@ -1,0 +1,16 @@
+<%%= hover_table do %>
+  <%%= table_head do %>
+    <%%= table_row do %>
+      <% attributes.reject(&:password_digest?).each do |attribute| -%>
+        <%%= table_column_compact "<%= attribute.human_name %>" %>
+      <% end %>
+      <%%= table_column_compact %>
+    <%% end %>
+  <%% end %>
+  <%%= table_head do %> 
+    <% attributes.reject(&:password_digest?).each do |attribute| -%>
+      <%%= table_data_column_compact "<%= attribute.human_name %>" %>
+    <% end %>
+    <%%= table_data_column_compact do link_to "Edit", edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: "btn text-sm btn-default" end %>
+  <%% end %>
+<%% end %>  

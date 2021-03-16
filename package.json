@@ -7,7 +7,10 @@
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.2.1",
     "autoprefixer": "^9",
+    "debounced": "^0.0.5",
     "postcss": "^7",
+    "stimulus": "^2.0.0",
+    "stimulus_reflex": "3.4.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "turbolinks": "^5.2.0"
   },

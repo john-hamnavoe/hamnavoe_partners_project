@@ -1,0 +1,26 @@
+  <% content_for :toolbar_col_1 do %>
+  <%= link_to issues_path(format: :xlsx), class: "btn btn-green" do %>
+    <span>Download Data</span>
+  <% end %>  
+  <% end %>
+
+<div data-controller="issues"  id='issues' data-reflex-root='#issues'>
+  <div class="mt-2 mb-4">
+    <div class="">
+      <%= render 'shared/index_page_top', edit_instance: nil, reflex: "IssueReflex", query: @query, hide_new: true %>
+      <div>
+        <%= render "table", issues: @issues, reflex_name: "IssueReflex" %>
+      </div>
+    </div>
+    <div class="mt-8">
+      <%= render "shared/index_page_paginator", pagy: @pagy, reflex: "IssueReflex" %>
+    </div>
+  </div>
+</div>
+
+<%= form_tag import_issues_path, multipart: true do %>
+  <%= file_field_tag :file, class: "btn btn-blue" %>
+  <div class="btn btn-default">
+    <input type="submit" class="upload"  name="commit" value="Import" data-disable-with="Import">
+  </div>
+<% end %>

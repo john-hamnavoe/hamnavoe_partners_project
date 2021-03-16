@@ -1,0 +1,13 @@
+<div data-controller="<%= plural_table_name %>"  id='<%= plural_table_name %>' data-reflex-root='#<%= plural_table_name %>'>
+  <div class="shadow mt-2 mb-4">
+    <div class="">
+      <%%= render 'shared/index_page_top', edit_instance: nil, reflex: "<%= singular_table_name.titleize %>Reflex", query: @query, hide_new: true %>
+      <div class="">
+        <%%= render "table", <%= plural_table_name %>: @<%= plural_table_name %>, reflex_name: "<%= singular_table_name.titleize %>Reflex" %>
+      </div>
+    </div>
+    <div class="">
+      <%%= render "shared/index_page_paginator", pagy: @pagy, reflex: "<%= singular_table_name.titleize %>Reflex" %>
+    </div>
+  </div>
+</div>
