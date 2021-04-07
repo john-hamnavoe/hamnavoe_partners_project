@@ -1,6 +1,6 @@
 <%= content_tag :div, class: "flex flex-wrap -mx-3 mb-1 nested-fields", data: { new_record: form.object.new_record? } do %>
   <div class="w-full md:w-5/12 px-3">
-    <%= form.text_field :description, class: "input input-sm" %>
+    <%= form.text_field :description, autofocus: true, class: "input input-sm" %>
   </div>
   <div class="w-full md:w-1/12 px-3">
     <%= form.number_field :hours, class: "input input-sm", min: 0, step: 0.5 %>

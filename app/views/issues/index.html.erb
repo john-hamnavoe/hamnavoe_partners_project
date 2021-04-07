@@ -1,9 +1,40 @@
-  <% content_for :toolbar_col_1 do %>
+<% content_for :toolbar_col_1 do %>
   <%= link_to issues_path(format: :xlsx), class: "btn btn-green" do %>
     <span>Download Data</span>
-  <% end %>  
   <% end %>
+<% end %>
+<% content_for :toolbar_col_2 do %>
+  <div class="grid grid-cols-4">
+    <div class="flex items-center">
+          <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+        Status
+      </label>
+            <input type="search" class="input input-sm" id="search-input" placeholder="Issue Status..." aria-label="Issue Status for..." autocomplete="off" value="<%= @issue_status.join(",") %>"
+                data-reflex="input->IssueReflex#change_status" >
+    </div>
+    <div class="flex items-center ml-2">
+          <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+        Type
+      </label>
+            <input type="search" class="input  input-sm" id="search-input" placeholder="Issue Type..." aria-label="Issue Type for..." autocomplete="off" value="<%= @issue_type.join(",") %>"
+                data-reflex="input->IssueReflex#change_type" >
+    </div>
+    <div class="flex items-center ml-2">
+          <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+        Priority
+      </label>
+            <input type="search" class="input  input-sm" id="search-input" placeholder="Issue Priority..." aria-label="Issue Priority for..." autocomplete="off" value="<%= @issue_priority.join(",") %>"
+                data-reflex="input->IssueReflex#change_priority" >
+    </div>  
+    <div class="flex items-center ml-2">
+          <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+        Track
+      </label>
+            <input type="checkbox" class="input  input-sm" <%= "checked" if @issue_tracked %> data-reflex="change->IssueReflex#change_tracked" >
+    </div>                
+  </div>
 
+<% end %>
 <div data-controller="issues"  id='issues' data-reflex-root='#issues'>
   <div class="mt-2 mb-4">
     <div class="">
@@ -17,7 +48,6 @@
     </div>
   </div>
 </div>
-
 <%= form_tag import_issues_path, multipart: true do %>
   <%= file_field_tag :file, class: "btn btn-blue" %>
   <div class="btn btn-default">

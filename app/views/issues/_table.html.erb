@@ -14,6 +14,7 @@
       <%= table_column_compact "Assigned to" %>
       <%= table_column_compact "Issue priority" %>
       <%= table_column_compact "Application name" %>
+      <%= table_column_compact "Tracked" %>      
       <%= table_column_compact %>
     <% end %>
   <% end %>
@@ -33,6 +34,7 @@
         <%= table_compact_data issue.assigned_to %>
         <%= table_compact_data issue.issue_priority %>
         <%= table_compact_data issue.application_name %>
+        <%= table_check_box_data issue.tracked %>        
         <%= table_compact_data do link_to "Edit", edit_issue_path(issue), class: "btn btn-default btn-outline text-xs" end %>
       <% end %>
     <% end %>

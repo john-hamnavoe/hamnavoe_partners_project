@@ -45,7 +45,7 @@
           <%= form.text_field :assigned_to, class: "input input-sm" %>
         </div>
       </div>
-      <div class="grid grid-cols-3 gap-4 mt-2 ">
+      <div class="grid grid-cols-4 gap-4 mt-2 ">
         <div class="field">
           <%= form.label :target_build, class: "label" %>
           <%= form.text_field :target_build, class: "input input-sm" %>
@@ -58,6 +58,10 @@
           <%= form.label :application_name, class: "label" %>
           <%= form.text_field :application_name, class: "input input-sm" %>
         </div>
+        <div class="field">
+          <%= form.label :tracked, class: "label" %>
+          <%= form.check_box :tracked, class: "input input-sm" %>
+        </div>        
       </div>
       <div class="field mt-2">
         <%= form.label :tags, class: "label" %>

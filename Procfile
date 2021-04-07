@@ -1,3 +1,2 @@
-web: rails server
-sidekiq: sidekiq
-webpack: bin/webpack-dev-server
+web: bin/rails server -p $PORT -e $RAILS_ENV
+sidekiq: bundle exec sidekiq -c 2

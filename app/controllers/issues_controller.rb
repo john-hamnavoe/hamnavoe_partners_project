@@ -6,7 +6,7 @@ class IssuesController < ApplicationController
 
   # GET /issues or /issues.json
   def index
-    @tissues = query_issues(query_params, { issue_status: "assigned", issue_type: %w[Issue Defect], issue_priority: %w[2-high 1-showstopper] })
+    @tissues = query_issues(query_params, {} )
 
     @page, @pagy, @issues = pagy_results(@tissues)
 
@@ -105,8 +105,16 @@ class IssuesController < ApplicationController
   end
 
   def query_issues(query_params, args = {})
+    @issue_status = session[:issue_issue_status]&.split(",") || %w[assigned]
+    @issue_type = session[:issue_issue_type]&.split(",") || %w[Issue Defect]
+    @issue_priority = session[:issue_issue_priority]&.split(",") || %w[2-high 1-showstopper]
+    @issue_tracked = session[:issue_issue_tracked] || false
+    args = args.merge({ issue_status: @issue_status }) if @issue_status.length.positive?
+    args = args.merge({ issue_type: @issue_type }) if @issue_type.length.positive?
+    args = args.merge({ issue_priority: @issue_priority }) if @issue_priority.length.positive?
+    args = args.merge({ tracked: true }) if @issue_tracked
     query = Issue.includes(:ticket).where(args)
-    query = query.where("lower(issue_no) LIKE :keyword OR lower(title) LIKE :keyword", keyword: "%#{query_params[:keywords].downcase}%") if query_params && query_params[:keywords]
+    query = query.where("lower(issue_no) LIKE :keyword OR lower(title) LIKE :keyword OR lower(tags) LIKE :keyword", keyword: "%#{query_params[:keywords].downcase}%") if query_params && query_params[:keywords]
     query.order("issue_no::integer ASC")
   end
 
@@ -117,6 +125,6 @@ class IssuesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def issue_params
-    params.require(:issue).permit(:issue_no, :notes, :tags, :current_status, :next_steps, :external_no, :target_build, :author, :issue_type, :title, :issue_status, :assigned_to, :issue_priority, :application_name, :project_id)
+    params.require(:issue).permit(:tracked, :issue_no, :notes, :tags, :current_status, :next_steps, :external_no, :target_build, :author, :issue_type, :title, :issue_status, :assigned_to, :issue_priority, :application_name, :project_id)
   end
 end

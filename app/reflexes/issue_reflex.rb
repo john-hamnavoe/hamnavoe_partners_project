@@ -39,4 +39,21 @@ class IssueReflex < ApplicationReflex
   def update_tags
     Issue.find_by(id: element.dataset[:id])&.update tags: element[:value]
   end
+
+  def change_status
+    session[:issue_issue_status] = element[:value]
+  end
+
+  def change_type
+    session[:issue_issue_type] = element[:value]
+  end
+
+  def change_priority
+    session[:issue_issue_priority] = element[:value]
+  end
+
+  def change_tracked
+    track_status = session[:issue_issue_tracked] || false
+    session[:issue_issue_tracked] = !track_status
+  end  
 end
