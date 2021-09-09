@@ -97,7 +97,7 @@ class IssuesController < ApplicationController
     Issue.import @import_data, on_duplicate_key_update: { conflict_target: [:issue_no, :project_id], columns: [:external_no, :target_build, :author, :issue_type, :title, :issue_status, :assigned_to, :issue_priority, :application_name] }, returning: :issue_no
     import_with_id = Issue.find_by(issue_no: "ID")
     import_with_id&.destroy
-    AssignTicketToIssueJob.perform_async(@project.id)
+    UpdateIssueWithCustomerStateJob.perform_async(@project.id)
     redirect_to issues_path, notice: "Issues imported and customer status is being updated!"
   end
 
