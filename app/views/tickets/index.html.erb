@@ -13,7 +13,5 @@
 </div>
 <%= form_tag import_tickets_path, multipart: true do %>
   <%= file_field_tag :file, class: "btn btn-blue" %>
-  <div class="btn btn-default">
-    <input type="submit" class="upload"  name="commit" value="Import" data-disable-with="Import">
-  </div>
+    <input type="submit" class="btn btn-default upload"  name="commit" value="Import" data-disable-with="Import">
 <% end %>
