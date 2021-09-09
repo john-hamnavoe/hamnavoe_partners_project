@@ -68,11 +68,11 @@ gem 'caxlsx'
 gem 'caxlsx_rails'
 gem 'devise', '~> 4.7', '>= 4.7.3'
 gem 'friendly_id', '~> 5.4', '>= 5.4.1'
+gem "hiredis"
 gem 'name_of_person', '~> 1.1', '>= 1.1.1'
 gem "pagy", "~> 3.8", ">= 3.8.3"
 gem 'redis', '~> 4.2', '>= 4.2.2'
-gem "hiredis", "~> 0.6.3"
-gem "redis-session-store", "~> 0.11.3"
+gem "redis-session-store"
 gem "roo", "~> 2.8.0"
 gem "roo-xls"
 gem 'sucker_punch'

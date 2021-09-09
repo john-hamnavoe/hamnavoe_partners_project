@@ -117,10 +117,17 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
-  config.cache_store = :redis_cache_store, {driver: :hiredis, url: ENV.fetch("REDIS_URL")}
-  config.session_store :cache_store,
-    key: "_session",
-    compress: true,
-    pool_size: 5,
-    expire_after: 1.year  
+  config.cache_store = :redis_cache_store, { driver: :hiredis, url: ENV.fetch("REDIS_URL") }
+
+  config.session_store :redis_session_store, {
+    key: "_session_production",
+    serializer: :json,
+    redis: {
+      driver: :hiredis,
+      expire_after: 1.year,
+      ttl: 1.year,
+      key_prefix: "app:session:",
+      url: ENV.fetch("HEROKU_REDIS_PINK_URL")
+    }
+  }
 end

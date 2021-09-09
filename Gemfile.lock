@@ -306,7 +306,7 @@ DEPENDENCIES
   caxlsx_rails
   devise (~> 4.7, >= 4.7.3)
   friendly_id (~> 5.4, >= 5.4.1)
-  hiredis (~> 0.6.3)
+  hiredis
   jbuilder (~> 2.7)
   listen (~> 3.3)
   name_of_person (~> 1.1, >= 1.1.1)
@@ -318,7 +318,7 @@ DEPENDENCIES
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.3)
   redis (~> 4.2, >= 4.2.2)
-  redis-session-store (~> 0.11.3)
+  redis-session-store
   roo (~> 2.8.0)
   roo-xls
   rubocop (= 0.82.0)
