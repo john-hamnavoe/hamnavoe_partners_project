@@ -73,5 +73,6 @@ gem "pagy", "~> 3.8", ">= 3.8.3"
 gem 'redis', '~> 4.2', '>= 4.2.2'
 gem "roo", "~> 2.8.0"
 gem "roo-xls"
+gem 'sucker_punch'
 gem 'sidekiq', '~> 6.1', '>= 6.1.2'
 gem 'stimulus_reflex', '~> 3.4'

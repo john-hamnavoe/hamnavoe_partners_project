@@ -1,11 +1,13 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: "issues") do |sheet|
-  sheet.add_row ['PractiTestNo',	'AMCS No',	'AMCS Status',	'External No',
-                 'Current Status', 'Next Steps', 'Tags',	'Issue Type',	'Title',	'Issue Status',	'Assigend To',	'With Customer',
-                 'Issue Priority',	'App Name']
-  @issues.each do |line|
-    sheet.add_row [line.issue_no,	line.ticket&.ticket_no,	line.ticket&.ticket_status,	line.external_no,
-                   line.current_status, line.next_steps, line.tags,	line.issue_type,	line.title,	line.issue_status,	line.assigned_to,	line.with_customer,
-                   line.issue_priority, line.application_name,]
+  sheet.add_row ['Practi No',	'AMCS No', 'Practi Status', 'AMCS Status', 'Practi Priority', 'AMCS Priority',	
+                 'Practi Target Build', 'AMCS Target Build',  
+                 'Practi External No', 'Issue Type',	'Title',	'Assigend To',	'With Customer',
+                 'App Name', 'Notes']
+  @tissues.each do |line|
+    sheet.add_row [line.issue_no,	line.ticket&.ticket_no,	line.issue_status, line.ticket&.ticket_status,	line.issue_priority, line.ticket&.ticket_priority, 
+                   line.target_build, line.ticket&.target_branch,
+                   line.external_no, line.issue_type,	line.title,		line.assigned_to,	line.with_customer,
+                   line.application_name, line.notes]
   end
 end

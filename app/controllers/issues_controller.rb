@@ -6,14 +6,14 @@ class IssuesController < ApplicationController
 
   # GET /issues or /issues.json
   def index
-    @tissues = query_issues(query_params, {} )
+    @tissues = query_issues(query_params, {})
 
     @page, @pagy, @issues = pagy_results(@tissues)
 
     respond_to do |format|
       format.html
       format.xlsx
-      format.json { render json: @issues.to_json }
+      format.json { render json: @tissues.to_json }
     end
   end
 
@@ -94,8 +94,11 @@ class IssuesController < ApplicationController
       @import_data << hash.merge(project_id: @project.id)
     end
 
-    import_result = Issue.import @import_data, on_duplicate_key_update: { conflict_target: [:issue_no, :project_id], columns: [:external_no, :target_build, :author, :issue_type, :title, :issue_status, :assigned_to, :issue_priority, :application_name] }, returning: :issue_no
-    redirect_to issues_path, notice: "Updates #{import_result.num_inserts}"
+    Issue.import @import_data, on_duplicate_key_update: { conflict_target: [:issue_no, :project_id], columns: [:external_no, :target_build, :author, :issue_type, :title, :issue_status, :assigned_to, :issue_priority, :application_name] }, returning: :issue_no
+    import_with_id = Issue.find_by(issue_no: "ID")
+    import_with_id&.destroy
+    AssignTicketToIssueJob.perform_async(@project.id)
+    redirect_to issues_path, notice: "Issues imported and customer status is being updated!"
   end
 
   private
@@ -105,14 +108,14 @@ class IssuesController < ApplicationController
   end
 
   def query_issues(query_params, args = {})
-    @issue_status = session[:issue_issue_status]&.split(",") || %w[assigned]
-    @issue_type = session[:issue_issue_type]&.split(",") || %w[Issue Defect]
-    @issue_priority = session[:issue_issue_priority]&.split(",") || %w[2-high 1-showstopper]
+    @issue_status = session[:issue_issue_status]&.split(",") || "assigned,new,ready to test".split(",")
+    @issue_type = session[:issue_issue_type]&.split(",") || %w[]
+    @issue_priority = session[:issue_issue_priority]&.split(",") || %w[]
     @issue_tracked = session[:issue_issue_tracked] || false
     args = args.merge({ issue_status: @issue_status }) if @issue_status.length.positive?
     args = args.merge({ issue_type: @issue_type }) if @issue_type.length.positive?
     args = args.merge({ issue_priority: @issue_priority }) if @issue_priority.length.positive?
-    args = args.merge({ tracked: true }) if @issue_tracked
+    args = args.merge({ tracked: @issue_tracked })
     query = Issue.includes(:ticket).where(args)
     query = query.where("lower(issue_no) LIKE :keyword OR lower(title) LIKE :keyword OR lower(tags) LIKE :keyword", keyword: "%#{query_params[:keywords].downcase}%") if query_params && query_params[:keywords]
     query.order("issue_no::integer ASC")

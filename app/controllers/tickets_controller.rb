@@ -72,18 +72,21 @@ class TicketsController < ApplicationController
     @import_errors = []
     spreadsheet = Roo::Spreadsheet.open(params[:file].path)
     @import_data = []
-    spreadsheet.each(ticket_no: "ticket_no",
-                     title: "title",
-                     ticket_status: "ticket_status",
-                     ticket_type: "ticket_type",
-                     ticket_priority: "ticket_priority",
-                     ticket_reason: "ticket_reason",
-                     target_branch: "target_branch") do |hash|
+    spreadsheet.each(ticket_no: "ID",
+                     title: "Title",
+                     ticket_status: "Request Status",
+                     ticket_type: "Category",
+                     ticket_priority: "Priority",
+                     ticket_reason: "Requestor",
+                     target_branch: "Target Release") do |hash|
       @import_data << hash.merge(project_id: @project.id)
     end
 
-    import_result = Ticket.import @import_data, on_duplicate_key_update: { conflict_target: [:ticket_no, :project_id], columns: [:title, :ticket_status, :ticket_type, :ticket_priority, :ticket_reason, :target_branch] }, returning: :ticket_no
-    redirect_to tickets_path, notice: "Updates #{import_result.num_inserts}"
+    Ticket.import @import_data, on_duplicate_key_update: { conflict_target: [:ticket_no, :project_id], columns: [:title, :ticket_status, :ticket_type, :ticket_priority, :ticket_reason, :target_branch] }, returning: :ticket_no
+    import_with_id = Ticket.find_by(ticket_no: "ID")
+    import_with_id&.destroy
+    AssignTicketToIssueJob.perform_async(@project.id)
+    redirect_to tickets_path, notice: "Tickets imported and are being matched to issues!"
   end
 
   private

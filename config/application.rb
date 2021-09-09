@@ -8,7 +8,8 @@ Bundler.require(*Rails.groups)
 
 module HamnavoePartnersProject
   class Application < Rails::Application
-    config.active_job.queue_adapter = :sidekiq
+    # config.active_job.queue_adapter = :sidekiq
+    config.active_job.queue_adapter = :sucker_punch
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
 

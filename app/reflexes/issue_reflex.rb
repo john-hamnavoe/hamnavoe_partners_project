@@ -55,5 +55,5 @@ class IssueReflex < ApplicationReflex
   def change_tracked
     track_status = session[:issue_issue_tracked] || false
     session[:issue_issue_tracked] = !track_status
-  end  
+  end
 end
