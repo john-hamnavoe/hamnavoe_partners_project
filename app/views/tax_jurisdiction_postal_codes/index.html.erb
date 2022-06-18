@@ -1,0 +1,16 @@
+<h1>Tax Jurisdiction Postal Codes SQL</h1>
+
+
+<% @current_tax_jurisdiction = @tax_jurisdiction_postal_codes.first.tax_jurisdiction %>
+<% @postal_codes = "'#{@tax_jurisdiction_postal_codes.first.postal_code}'" %>
+<% @tax_jurisdiction_postal_codes.each_with_index do |tax_post, index| %>
+  <% if tax_post.tax_jurisdiction == @current_tax_jurisdiction %>
+    <% @postal_codes = "#{@postal_codes} , '#{tax_post.postal_code}'" if index > 1 %>
+  <% else %>
+    <p><%= "INSERT INTO TaxJurisdictionPostalCode(TaxJurisdictionId, PostalCodeId) SELECT TaxJurisdictionId, PostalCodeId FROM TaxJurisdiction CROSS JOIN PostalCode WHERE TaxJurisdiction.Description = '#{@current_tax_jurisdiction}' AND PostalCode.PostalCode IN (#{@postal_codes});" %></p>
+    <% @postal_codes = "'#{tax_post.postal_code}'" %>
+    <% @current_tax_jurisdiction = tax_post.tax_jurisdiction %>  
+  <% end %>
+
+<% end %>
+    <p><%= "INSERT INTO TaxJurisdictionPostalCode(TaxJurisdictionId, PostalCodeId) SELECT TaxJurisdictionId, PostalCodeId FROM TaxJurisdiction CROSS JOIN PostalCode WHERE TaxJurisdiction.Description = '#{@current_tax_jurisdiction}' AND PostalCode.PostalCode IN (#{@postal_codes});" %></p>

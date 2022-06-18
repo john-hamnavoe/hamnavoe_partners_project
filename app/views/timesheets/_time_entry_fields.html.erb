@@ -3,7 +3,7 @@
     <%= form.text_field :description, autofocus: true, class: "input input-sm" %>
   </div>
   <div class="w-full md:w-1/12 px-3">
-    <%= form.number_field :hours, class: "input input-sm", min: 0, step: 0.5 %>
+    <%= form.number_field :hours, class: "input input-sm", min: 0, step: 0.25 %>
   </div>
   <div class="w-full md:w-1/12 px-3">
     <small><%= link_to "Remove", "#", data: { action: "click->nested-form#remove_association" } %></small>

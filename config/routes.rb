@@ -1,7 +1,9 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  # get 'tax_jurisdiction_postal_codes/index'
   resources :timesheets
+  resources :tax_jurisdiction_postal_codes, only: [:index]
   resources :tickets do
     collection do
       post :import
