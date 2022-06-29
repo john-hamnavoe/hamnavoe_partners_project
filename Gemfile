@@ -50,6 +50,8 @@ group :development do
   gem "rubocop-github", "0.16.0"
   gem "rubocop-performance", "1.7.0", require: false
   gem "rubocop-rails", "2.6.0", require: false  
+
+  gem 'seed_dump'
 end
 
 group :test do
