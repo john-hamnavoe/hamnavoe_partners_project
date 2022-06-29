@@ -1,0 +1,79 @@
+<%= form_with(model: tcase) do |form| %>
+  <% if tcase.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(tcase.errors.count, "error") %> prohibited this case from being saved:</h2>
+      <ul>
+        <% tcase.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="grid grid-cols-2">
+    <div class="px-4 py-4">
+      <div class="grid grid-cols-3 gap-4">
+        <div>
+          <%= form.label :case_no, class: "label" %>
+          <%= form.text_field :case_no, class: "input input-sm" %>
+        </div>
+        <div>
+          <%= form.label :stage, class: "label" %>
+          <%= form.text_field :stage, class: "input input-sm" %>
+        </div>
+        <div>
+          <%= form.label :previous_stage, class: "label" %>
+          <%= form.text_field :previous_stage, class: "input input-sm" %>
+        </div>        
+      </div>
+      <div class="field mt-2">
+        <%= form.label :subject, class: "label" %>
+        <%= form.text_field :subject, class: "input input-sm" %>
+      </div>
+      <div class="grid grid-cols-2 gap-4 mt-2">
+        <div class="field">
+          <%= form.label :status, class: "label" %>
+          <%= form.text_field :status, class: "input input-sm" %>
+        </div>
+        <div class="field">
+          <%= form.label :previous_status, class: "label" %>
+          <%= form.text_field :previous_status, class: "input input-sm" %>
+        </div>
+      </div>
+      <div class="grid grid-cols-4 gap-4 mt-2 ">
+        <div class="field">
+          <%= form.label :tracked, class: "label" %>
+          <%= form.check_box :tracked, class: "input input-sm" %>
+        </div>       
+        <div class="field">
+          <%= form.label :assigned_to, class: "label" %>
+          <%= form.text_field :assigned_to, class: "input input-sm" %>
+        </div>
+        <div class="field">
+          <%= form.label :product, class: "label" %>
+          <%= form.text_field :product, class: "input input-sm" %>
+        </div>
+        <div class="field">
+          <%= form.label :module, class: "label" %>
+          <%= form.text_field :module, class: "input input-sm" %>
+        </div>                         
+      </div>
+      <div class="field mt-2">
+        <%= form.label :tags, class: "label" %>
+        <%= form.text_field :tags, class: "input input-sm" %>
+      </div>      
+      <div class="field">
+        <%= form.label :notes, class: "label" %>
+        <%= form.text_area :notes, rows: 4, class: "input input-sm" %>
+      </div>
+      <div class="field">
+        <%= form.label :next_steps, class: "label" %>
+        <%= form.text_area :next_steps, rows: 4, class: "input input-sm" %>
+      </div>
+      <div class="actions">
+        <%= form.submit "Save", class: "btn btn-default mt-2" %>
+        <%= link_to "back", cases_path%>
+      </div>
+    </div>
+ 
+  </div>
+<% end %>

@@ -1,0 +1,57 @@
+<% content_for :toolbar_col_1 do %>
+  <%= link_to cases_path(format: :xlsx, keywords: @query), class: "btn btn-green" do %>
+    <span>Download Data</span>
+  <% end %>
+<% end %>
+<% content_for :toolbar_col_2 do %>
+
+  <div class="grid grid-cols-4">
+    <div class="flex items-center">
+          <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+       No
+      </label>
+            <input type="search" class="input input-sm" id="search-input" placeholder="Case No..." aria-label="Case No for..." autocomplete="off" value="<%= @case_no.join(",") %>"
+                data-reflex="input->CaseReflex#change_no" >
+    </div>  
+    <div class="flex items-center ml-2">
+          <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+        Status
+      </label>
+            <input type="search" class="input input-sm" id="search-input" placeholder="Case Status..." aria-label="Case Status for..." autocomplete="off" value="<%= @case_status.join(",") %>"
+                data-reflex="input->CaseReflex#change_status" >
+    </div>
+    <div class="flex items-center ml-2">
+          <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+        Priority
+      </label>
+            <input type="search" class="input  input-sm" id="search-input" placeholder="Case Priority..." aria-label="Case Priority for..." autocomplete="off" value="<%= @case_priority.join(",") %>"
+                data-reflex="input->CaseReflex#change_priority" >
+    </div>  
+    <div class="flex items-center ml-2">
+          <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+        Track
+      </label>
+            <input type="checkbox" class="input  input-sm" <%= "checked" if @case_tracked %> data-reflex="change->CaseReflex#change_tracked" >
+    </div>                      
+  </div>
+
+<% end %>
+<div data-controller="cases"  id='cases' data-reflex-root='#cases'>
+  <div class="mt-2 mb-4">
+    <div class="">
+      <%= render 'shared/index_page_top', edit_instance: nil, reflex: "CaseReflex", query: @query, hide_new: true %>
+      <div>
+        <%= render "table", cases: @cases, reflex_name: "CaseReflex" %>
+      </div>
+    </div>
+    <div class="mt-8">
+      <%= render "shared/index_page_paginator", pagy: @pagy, reflex: "CaseReflex" %>
+    </div>
+  </div>
+</div>
+<%= form_tag import_cases_path, multipart: true do %>
+  <%= file_field_tag :file, class: "btn btn-blue" %>
+
+    <input type="submit" class="btn btn-default upload"  name="commit" value="Import" data-disable-with="Import">
+
+<% end %>

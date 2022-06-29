@@ -1,0 +1,47 @@
+<%= hover_table do %>
+  <%= table_head do %>
+    <%= table_row do %>
+      <%= sortable_tr_compact("case_no", "CaseReflex") %>
+      <%= sortable_tr_compact("subject", "CaseReflex") %>
+      <%= sortable_tr_compact("priority", "CaseReflex") %>
+      <%= sortable_tr_compact("status", "CaseReflex") %>
+      <%= table_column_compact "Previous" %>      
+      <%= sortable_tr_compact("stage", "CaseReflex") %>
+      <%= table_column_compact "Notes" %>
+      <%= table_column_compact "Next Steps" %>      
+      <%= table_column_compact "Tags" %>
+      <%= table_column_compact "Process" %>      
+      <%= table_column_compact %>
+    <% end %>
+  <% end %>
+  <%= table_body  do %>
+    <% cases.each do |tcase| %>
+      <% bg_row = tcase.id % 2 == 0 ? "bg:white" : "bg-gray-100" %>
+      <% bg_diff = tcase.status == tcase.previous_status ? "" : "bg-green-100" %>
+      <%= table_row(add_class: bg_row) do %>
+        <%= table_compact_data tcase.case_no %>
+        <%= table_compact_data tcase.subject[0..75]%>
+        <%= table_compact_data tcase.priority%>
+        <%= table_compact_data tcase.status, add_class: "#{bg_diff}" %>
+        <%= table_compact_data tcase.previous_status, add_class: "#{bg_diff}" %>        
+        <%= table_compact_data tcase.stage %>             
+        <td><%= tag(:input, type: "text", value: tcase.notes,  data: { id: tcase.id, reflex: "change->CaseReflex#update_notes" },  class: "w-full h8 p-1 text-sm text-gray-700 placeholder-gray-600 border border-gray-400 rounded-lg leading-tight bg-white shadow-inner" )%> </td>
+        <td><%= tag(:input, type: "text", value: tcase.next_steps,  data: { id: tcase.id, reflex: "change->CaseReflex#update_next" },  class: "w-full h8 p-1 text-sm text-gray-700 placeholder-gray-600 border border-gray-400 rounded-lg leading-tight bg-white shadow-inner" )%> </td>
+        <td style="width: 200px;"><%= tag(:input, type: "text", value: tcase.tags,  data: { id: tcase.id, reflex: "change->CaseReflex#update_tags" },  class: "h8 p-1 text-sm text-gray-700 placeholder-gray-600 border border-gray-400 rounded-lg leading-tight bg-white shadow-inner" )%> </td>
+        <td style="width: 200px;"><%= select_tag :test_case_id,
+                  options_for_select(test_case_for_select, tcase.test_case_id),
+                  placeholder: "Select a process...",
+                  class: "w-full h8 p-1 text-sm text-gray-700 placeholder-gray-600 border border-gray-400 rounded-lg leading-tight bg-white shadow-inner",
+                  data: { reflex: "change->CaseReflex#update_test", id: tcase.id }, 
+                  multiple: false,
+                  include_blank: true,
+                  id:  tcase.id %>
+        </td>
+        <%= table_compact_data do link_to "Edit", edit_case_path(tcase), class: "btn btn-default btn-outline text-xs" end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+
+

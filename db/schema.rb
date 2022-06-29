@@ -10,10 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_01_090421) do
+ActiveRecord::Schema.define(version: 2022_06_20_085027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cases", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "test_case_id"
+    t.string "case_no"
+    t.string "project_no"
+    t.string "subject"
+    t.string "priority"
+    t.string "product"
+    t.string "module"
+    t.string "status"
+    t.string "stage"
+    t.string "assigned_to"
+    t.boolean "tracked", default: false
+    t.string "notes"
+    t.string "tags"
+    t.string "next_steps"
+    t.string "previous_stage"
+    t.string "previous_status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "archived_step"
+    t.index ["project_id", "case_no"], name: "index_cases_on_project_id_and_case_no", unique: true
+    t.index ["project_id"], name: "index_cases_on_project_id"
+    t.index ["test_case_id"], name: "index_cases_on_test_case_id"
+  end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
@@ -66,6 +92,21 @@ ActiveRecord::Schema.define(version: 2021_11_01_090421) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "test_cases", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.integer "position"
+    t.string "department"
+    t.string "title"
+    t.string "extra"
+    t.string "status"
+    t.string "assigned_to"
+    t.string "notes"
+    t.string "additional_solution"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_test_cases_on_project_id"
+  end
+
   create_table "tickets", force: :cascade do |t|
     t.string "ticket_no"
     t.string "title"
@@ -114,8 +155,11 @@ ActiveRecord::Schema.define(version: 2021_11_01_090421) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "cases", "projects"
+  add_foreign_key "cases", "test_cases"
   add_foreign_key "issues", "projects"
   add_foreign_key "issues", "tickets"
+  add_foreign_key "test_cases", "projects"
   add_foreign_key "tickets", "projects"
   add_foreign_key "time_entries", "timesheets"
   add_foreign_key "timesheets", "users"

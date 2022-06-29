@@ -1,0 +1,35 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Cases") do |sheet|
+  sheet.add_row ['Case No',	'Subject', 'Priority', 'Status', 'Previous Status', 
+                 'Next Steps', 'Demo', 'UAT',	'Process',	'Notes',	'Tags',
+                 'Assigned To', 'Stage', 'Product', 'Module']
+  @tcases.each do |line|
+    demo = line.tags.include?("DEMO") ? "Y" : "" unless line.tags.nil?
+    uat = line.tags.include?("UAT") ? "Y" : "" unless line.tags.nil?
+    sheet.add_row [line.case_no,	line.subject,	line.priority, line.status, line.previous_status, 
+                   line.next_steps, demo, uat, line.test_case&.title, line.notes, line.tags,    
+                  line.assigned_to, line.stage, line.product, line.module]
+  end
+end
+
+wb.add_worksheet(name: "Processes") do |sheet|
+  sheet.add_row ['Position',	'Department', 'Title', 'Assigned', 'Status', 
+                 'Linked Cases', 'Extra', 'Notes', 'Additional Solutions']
+  @tprocesses.each do |line|
+    demo = line.cases.where.not(status: "Closed").pluck(:tags).join("").include?("DEMO")
+    uat = line.cases.where.not(status: "Closed").pluck(:tags).join("").include?("UAT")
+    status = if uat && demo 
+                "Blocked UAT and Demo"
+             elsif uat 
+                "Blocked UAT"
+             elsif demo 
+                "Blocked DEMO"
+             else 
+                ""
+             end
+
+    cases = line.cases.where.not(status: "Closed").pluck(:case_no).join(",")
+    sheet.add_row [line.position,	line.department,	line.title, line.assigned_to, status, 
+                   cases, line.extra, line.notes, line.additional_solution], types: [nil, nil, nil, nil, nil, :string, nil, nil, nil]
+  end
+end

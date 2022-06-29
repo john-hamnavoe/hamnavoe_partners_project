@@ -17,10 +17,15 @@ Rails.application.routes.draw do
       post :import
     end
   end
-  resources :projects
-    authenticate :user, lambda { |u| u.admin? } do
-      mount Sidekiq::Web => '/sidekiq'
+  resources :cases do
+    collection do
+      post :import
     end
+  end  
+  resources :projects
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 
 
   devise_for :users
