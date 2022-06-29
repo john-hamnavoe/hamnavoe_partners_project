@@ -1,13 +1,14 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: "Cases") do |sheet|
   sheet.add_row ['Case No',	'Subject', 'Priority', 'Status', 'Previous Status', 
-                 'Next Steps', 'Demo', 'UAT',	'Process',	'Notes',	'Tags',
+                 'Next Steps', 'Demo', 'UAT', 'PROD',	'Process',	'Notes',	'Tags',
                  'Assigned To', 'Stage', 'Product', 'Module']
   @tcases.each do |line|
     demo = line.tags.include?("DEMO") ? "Y" : "" unless line.tags.nil?
     uat = line.tags.include?("UAT") ? "Y" : "" unless line.tags.nil?
+    prod = line.tags.include?("PROD") ? "Y" : "" unless line.tags.nil?
     sheet.add_row [line.case_no,	line.subject,	line.priority, line.status, line.previous_status, 
-                   line.next_steps, demo, uat, line.test_case&.title, line.notes, line.tags,    
+                   line.next_steps, demo, uat, prod, line.test_case&.title, line.notes, line.tags,    
                   line.assigned_to, line.stage, line.product, line.module]
   end
 end
