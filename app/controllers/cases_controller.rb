@@ -11,6 +11,10 @@ class CasesController < ApplicationController
 
     @page, @pagy, @cases = pagy_results(@tcases)
 
+    if request.format.xlsx?
+      @summary_cases = Case.where(project_id: @tcases.pluck(:project_id).uniq).where.not(status: "Closed").group(:status).count 
+    end
+
     respond_to do |format|
       format.html
       format.xlsx

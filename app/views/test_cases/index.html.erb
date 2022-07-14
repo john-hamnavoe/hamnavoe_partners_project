@@ -1,0 +1,15 @@
+
+
+<div data-controller="test_cases"  id='test_cases' data-reflex-root='#test_cases'>
+  <div class="mt-2 mb-4">
+    <div class="">
+      <%= render 'shared/index_page_top', edit_instance: nil, reflex: "TestCaseReflex", query: @query, hide_new: true %>
+      <div>
+        <%= render "table", test_cases: @test_cases, reflex_name: "TestCaseReflex" %>
+      </div>
+    </div>
+    <div class="mt-8">
+      <%= render "shared/index_page_paginator", pagy: @pagy, reflex: "TestCaseReflex" %>
+    </div>
+  </div>
+</div>

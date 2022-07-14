@@ -1,4 +1,39 @@
 wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "Summary") do |sheet|
+  sheet.add_row ['Cases Summary By Status',	'', '#', '']
+  @summary_cases.each do |key, value|
+    sheet.add_row ['',	key,	value, '']
+  end
+
+  total_cases = @tprocesses.count
+
+  sheet.add_row ['',	'', '', '']  
+
+  sheet.add_row ['Test Case Summary',	'', '#', '%']    
+  sheet.add_row ['',	'Total Test Cases',	total_cases, '']
+  uat_blocked = 0
+  demo_blocked = 0
+  volume_test_cases = 0
+  test_cases_exe = 0
+  volume_test_exe = 0  
+  @tprocesses.each do |line|
+    demo_blocked = demo_blocked + 1 if  line.cases.where.not(status: "Closed").pluck(:tags).join("").include?("DEMO")
+    uat_blocked = uat_blocked + 1 if  line.cases.where.not(status: "Closed").pluck(:tags).join("").include?("UAT")
+    test_cases_exe = test_cases_exe + 1 unless line.tests_executed
+    if line.volume_test_required
+      volume_test_cases = volume_test_cases + 1 
+      volume_test_exe = volume_test_exe + 1 unless line.volume_tests_executed
+    end
+  end  
+
+  sheet.add_row ['',	'Test Cases Blocked for Demo by Issues',	demo_blocked, (demo_blocked.to_f / total_cases.to_f * 100).round]
+  sheet.add_row ['',	'Test Cases Blocked for UAT by Issues',	uat_blocked, (uat_blocked.to_f / total_cases.to_f * 100).round]
+  sheet.add_row ['',	'Test Cases Not Executable',	test_cases_exe, (test_cases_exe.to_f / total_cases.to_f * 100).round]  
+  sheet.add_row ['',	'Total Volume Related Test Cases',	volume_test_cases, '']
+  sheet.add_row ['',	'Volume Test Cases Not Executable',	volume_test_exe, (volume_test_exe.to_f / volume_test_cases.to_f * 100).round] if volume_test_cases.positive?
+end
+
 wb.add_worksheet(name: "Cases") do |sheet|
   sheet.add_row ['Case No',	'Subject', 'Priority', 'Status', 'Previous Status', 
                  'Next Steps', 'Demo', 'UAT', 'PROD',	'Process',	'Notes',	'Tags',
@@ -15,7 +50,8 @@ end
 
 wb.add_worksheet(name: "Processes") do |sheet|
   sheet.add_row ['Position',	'Department', 'Title', 'Assigned', 'Status', 
-                 'Linked Cases', 'Extra', 'Notes', 'Additional Solutions']
+                 'Linked Cases', 'Extra', 'Notes', 'Additional Solutions', 
+                 'Vol. Test Req.?', 'Volume Per Month', 'Tests Execute?', 'Vol. Tests Execute?']
   @tprocesses.each do |line|
     demo = line.cases.where.not(status: "Closed").pluck(:tags).join("").include?("DEMO")
     uat = line.cases.where.not(status: "Closed").pluck(:tags).join("").include?("UAT")
@@ -24,13 +60,19 @@ wb.add_worksheet(name: "Processes") do |sheet|
              elsif uat 
                 "Blocked UAT"
              elsif demo 
-                "Blocked DEMO"
+                "Blocked Demo"
              else 
                 ""
              end
 
+    vol_test_req = line.volume_test_required ? "Y" : ""
+    vol_test_exe = line.volume_tests_executed ? "Y" : ""
+    test_exe = line.tests_executed ? "Y" : ""
+
     cases = line.cases.where.not(status: "Closed").pluck(:case_no).join(",")
     sheet.add_row [line.position,	line.department,	line.title, line.assigned_to, status, 
-                   cases, line.extra, line.notes, line.additional_solution], types: [nil, nil, nil, nil, nil, :string, nil, nil, nil]
+                   cases, line.extra, line.notes, line.additional_solution, 
+                   vol_test_req, line.volume_per_month, test_exe, vol_test_exe], 
+                   types: [nil, nil, nil, nil, nil, :string, nil, nil, nil, nil, nil, nil, nil]
   end
 end

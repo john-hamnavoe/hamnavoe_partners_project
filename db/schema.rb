@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_20_085027) do
+ActiveRecord::Schema.define(version: 2022_07_13_172150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,10 @@ ActiveRecord::Schema.define(version: 2022_06_20_085027) do
     t.string "additional_solution"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "volume_test_required", default: false
+    t.integer "volume_per_month"
+    t.boolean "tests_executed", default: false
+    t.boolean "volume_tests_executed", default: false
     t.index ["project_id"], name: "index_test_cases_on_project_id"
   end
 

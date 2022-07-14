@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       post :import
     end
   end  
+  resources :test_cases, only: [:index]
   resources :projects
   authenticate :user, lambda { |u| u.admin? } do
     mount Sidekiq::Web => '/sidekiq'

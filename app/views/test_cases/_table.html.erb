@@ -1,0 +1,36 @@
+<%= hover_table do %>
+  <%= table_head do %>
+    <%= table_row do %>
+      <%= sortable_tr_compact("position", "TestCaseReflex") %>
+      <%= sortable_tr_compact("department", "TestCaseReflex") %>
+      <%= sortable_tr_compact("title", "TestCaseReflex") %>
+      <%= sortable_tr_compact("extra", "TestCaseReflex") %>
+
+      <%= table_column_compact "Additional Solution" %>
+      <%= table_column_compact "Notes" %>      
+      <%= table_column_compact "Vol. Test Required?" %>
+      <%= table_column_compact "Vol. Per Month" %>      
+      <%= table_column_compact "Tests Execute?" %>
+      <%= table_column_compact "Vol Tests Execute?" %>     
+    <% end %>
+  <% end %>
+  <%= table_body  do %>
+    <% test_cases.each do |test_case| %>
+      <%= table_row do %>
+        <%= table_compact_data test_case.position %>
+        <%= table_compact_data test_case.department[0..75]%>
+        <%= table_compact_data test_case.title[0..75]%>
+        <%= table_compact_data test_case.extra[0..75]%>         
+        <td><%= tag(:input, type: "text", value: test_case.additional_solution,  data: { id: test_case.id, reflex: "change->TestCaseReflex#update_solution" },  class: "w-full h8 p-1 text-sm text-gray-700 placeholder-gray-600 border border-gray-400 rounded-lg leading-tight bg-white shadow-inner" )%> </td>
+        <td><%= tag(:input, type: "text", value: test_case.notes,  data: { id: test_case.id, reflex: "change->TestCaseReflex#update_notes" },  class: "w-full h8 p-1 text-sm text-gray-700 placeholder-gray-600 border border-gray-400 rounded-lg leading-tight bg-white shadow-inner" )%> </td>
+        <td><%= tag(:input, type: "checkbox", value: test_case.volume_test_required, checked: test_case.volume_test_required,  data: { id: test_case.id, field: "volume_test_required", reflex: "change->TestCaseReflex#toggle_value" },  class: "w-full h8 p-1 text-sm text-gray-700 placeholder-gray-600 border border-gray-400 rounded-lg leading-tight bg-white shadow-inner" )%> </td>
+        <td><%= tag(:input, type: "number", value: test_case.volume_per_month,  data: { id: test_case.id, reflex: "change->TestCaseReflex#update_month" },  class: "w-full h8 p-1 text-sm text-gray-700 placeholder-gray-600 border border-gray-400 rounded-lg leading-tight bg-white shadow-inner" )%> </td>
+        <td><%= tag(:input, type: "checkbox", value: test_case.tests_executed, checked: test_case.tests_executed,  data: { id: test_case.id, field: "tests_executed", reflex: "change->TestCaseReflex#toggle_value" },  class: "w-full h8 p-1 text-sm text-gray-700 placeholder-gray-600 border border-gray-400 rounded-lg leading-tight bg-white shadow-inner" )%> </td>
+        <td><%= tag(:input, type: "checkbox", value: test_case.volume_tests_executed, checked: test_case.volume_tests_executed,  data: { id: test_case.id, field: "volume_tests_executed", reflex: "change->TestCaseReflex#toggle_value" },  class: "w-full h8 p-1 text-sm text-gray-700 placeholder-gray-600 border border-gray-400 rounded-lg leading-tight bg-white shadow-inner" )%> </td>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+
+
