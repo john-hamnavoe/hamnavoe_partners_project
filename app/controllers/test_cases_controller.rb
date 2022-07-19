@@ -23,7 +23,7 @@ class TestCasesController < ApplicationController
   end
 
   def query_cases(query_params, args = {})
-    query = TestCase.where(args)
+    query = TestCase.includes(:active_cases).where(args)
     query = query.where("lower(title) LIKE :keyword OR lower(notes) LIKE :keyword OR lower(extra) LIKE :keyword", keyword: "%#{query_params[:keywords].downcase}%") if query_params && query_params[:keywords]
 
     order_by = permitted_column_name(permitted_order_columns, session[session_symbol("order_by")])

@@ -49,30 +49,40 @@ wb.add_worksheet(name: "Cases") do |sheet|
 end
 
 wb.add_worksheet(name: "Processes") do |sheet|
-  sheet.add_row ['Position',	'Department', 'Title', 'Assigned', 'Status', 
+  sheet.add_row ['Position', 'Status',	'Department', 'Title', 'Assigned', 'UAT Demo Status', 
                  'Linked Cases', 'Extra', 'Notes', 'Additional Solutions', 
                  'Vol. Test Req.?', 'Volume Per Month', 'Tests Execute?', 'Vol. Tests Execute?']
   @tprocesses.each do |line|
     demo = line.cases.where.not(status: "Closed").pluck(:tags).join("").include?("DEMO")
     uat = line.cases.where.not(status: "Closed").pluck(:tags).join("").include?("UAT")
-    status = if uat && demo 
-                "Blocked UAT and Demo"
-             elsif uat 
-                "Blocked UAT"
-             elsif demo 
-                "Blocked Demo"
+    uat_status = if uat && demo 
+                  "Blocked UAT and Demo"
+                 elsif uat 
+                  "Blocked UAT"
+                 elsif demo 
+                  "Blocked Demo"
+                 else 
+                  ""
+                end
+
+    status = if line.active_cases.count.positive?
+                "Blocked By Cases"
+             elsif !line.tests_executed
+                "Tests Not Executable"
+             elsif line.volume_test_required && !line.volume_tests_executed 
+                "Volume Tests Not Executable"
              else 
-                ""
-             end
+                "Passing"
+             end           
 
     vol_test_req = line.volume_test_required ? "Y" : ""
     vol_test_exe = line.volume_tests_executed ? "Y" : ""
     test_exe = line.tests_executed ? "Y" : ""
 
-    cases = line.cases.where.not(status: "Closed").pluck(:case_no).join(",")
-    sheet.add_row [line.position,	line.department,	line.title, line.assigned_to, status, 
+    cases = line.active_cases.pluck(:case_no).join(",")
+    sheet.add_row [line.position,	status, line.department,	line.title, line.assigned_to, uat_status, 
                    cases, line.extra, line.notes, line.additional_solution, 
                    vol_test_req, line.volume_per_month, test_exe, vol_test_exe], 
-                   types: [nil, nil, nil, nil, nil, :string, nil, nil, nil, nil, nil, nil, nil]
+                   types: [nil, nil, nil, nil, nil, nil, :string, nil, nil, nil, nil, nil, nil, nil]
   end
 end
