@@ -50,7 +50,7 @@ end
 
 wb.add_worksheet(name: "Processes") do |sheet|
   sheet.add_row ['Position', 'Status',	'Department', 'Title', 'Assigned', 'UAT Demo Status', 
-                 'Linked Cases', 'Extra', 'Notes', 'Additional Solutions', 
+                 'Blocking P1 Cases', 'Blocking P2 Cases', 'All Linked Cases', 'Extra', 'Notes', 'Additional Solutions', 
                  'Vol. Test Req.?', 'Volume Per Month', 'Tests Execute?', 'Vol. Tests Execute?']
   @tprocesses.each do |line|
     demo = line.cases.where.not(status: "Closed").pluck(:tags).join("").include?("DEMO")
@@ -65,7 +65,7 @@ wb.add_worksheet(name: "Processes") do |sheet|
                   ""
                 end
 
-    status = if line.active_cases.count.positive?
+    status = if line.blocking_p1_cases.count.positive? || line.blocking_p2_cases.count.positive?
                 "Blocked By Cases"
              elsif !line.tests_executed
                 "Tests Not Executable"
@@ -80,9 +80,11 @@ wb.add_worksheet(name: "Processes") do |sheet|
     test_exe = line.tests_executed ? "Y" : ""
 
     cases = line.active_cases.pluck(:case_no).join(",")
+    blocking_p1_cases = line.blocking_p1_cases.pluck(:case_no).join(",")
+    blocking_p2_cases = line.blocking_p2_cases.pluck(:case_no).join(",")    
     sheet.add_row [line.position,	status, line.department,	line.title, line.assigned_to, uat_status, 
-                   cases, line.extra, line.notes, line.additional_solution, 
+                   blocking_p1_cases, blocking_p2_cases, cases, line.extra, line.notes, line.additional_solution, 
                    vol_test_req, line.volume_per_month, test_exe, vol_test_exe], 
-                   types: [nil, nil, nil, nil, nil, nil, :string, nil, nil, nil, nil, nil, nil, nil]
+                   types: [nil, nil, nil, nil, nil, nil, :string, :string, :string, nil, nil, nil, nil, nil, nil, nil]
   end
 end

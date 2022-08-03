@@ -6,7 +6,7 @@ module ApplicationHelper
 
 
   def test_case_status_icon(test_case)
-    if test_case.active_cases.count.positive?
+    if test_case.blocking_p1_cases.count.positive? || test_case.blocking_p2_cases.count.positive?
       content_tag(:svg, class: "h-6 w-6 text-red-700", xmlns: "http://www.w3.org/2000/svg", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", "stroke-width": "2") do  
         content_tag(:path, nil, "stroke-linecap": "round", "stroke-linejoin": "round",  d: "M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z") + 
         content_tag(:title, "Blocked By Cases")

@@ -47,6 +47,11 @@ class TestCaseReflex < ApplicationReflex
     morph :nothing
   end
 
+  def update_assigned_to
+    TestCase.find_by(id: element.dataset[:id])&.update assigned_to: element[:value]
+    morph :nothing
+  end  
+
   def toggle_value
     test_case = TestCase.find_by(id: element.dataset[:id])
     test_case.update(element.dataset[:field] => !test_case[element.dataset[:field]])
