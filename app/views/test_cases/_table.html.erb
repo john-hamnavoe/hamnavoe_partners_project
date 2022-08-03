@@ -8,7 +8,6 @@
       <%= sortable_tr_compact("extra", "TestCaseReflex") %>
       <%= table_column_compact "Blocking P1" %>      
       <%= table_column_compact "Blocking P2" %>            
-      <%= table_column_compact "All Linked Cases" %>
       <%= table_column_compact "Who" %>
       <%= table_column_compact "Additional Solution" %>
       <%= table_column_compact "Notes" %>      
@@ -28,7 +27,6 @@
         <%= table_compact_data test_case.extra[0..75]%>      
         <%= table_compact_data test_case.blocking_p1_cases.pluck(:case_no).join(",")%>            
         <%= table_compact_data test_case.blocking_p2_cases.pluck(:case_no).join(",")%>            
-        <%= table_compact_data test_case.active_cases.pluck(:case_no).join(",")%>    
         <%= table_compact_data do %>
           <%= tag(:input, type: "text", value: test_case.assigned_to,  data: { id: test_case.id, reflex: "change->TestCaseReflex#update_assigned_to" }, size: "4", class: "w-full h8 p-1 text-sm text-gray-700 placeholder-gray-600 border border-gray-400 rounded-lg leading-tight bg-white shadow-inner" )%> </td>  
         <% end %>          
