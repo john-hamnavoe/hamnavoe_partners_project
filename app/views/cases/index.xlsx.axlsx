@@ -19,7 +19,7 @@ wb.add_worksheet(name: "Summary") do |sheet|
   volume_test_exe = 0  
   @tprocesses.each do |line|
     demo_blocked = demo_blocked + 1 if  line.cases.where.not(status: "Closed").pluck(:tags).join("").include?("DEMO")
-    uat_blocked = uat_blocked + 1 if  line.cases.where.not(status: "Closed").pluck(:tags).join("").include?("UAT")
+    uat_blocked = uat_blocked + 1 if  line.cases.where.not(status: "Closed").pluck(:tags).join("").include?("UAT") 
     test_cases_exe = test_cases_exe + 1 unless line.tests_executed
     if line.volume_test_required
       volume_test_cases = volume_test_cases + 1 
@@ -36,14 +36,17 @@ end
 
 wb.add_worksheet(name: "Cases") do |sheet|
   sheet.add_row ['Case No',	'Subject', 'Priority', 'Status', 'Previous Status', 
-                 'Next Steps', 'Demo', 'UAT', 'PROD',	'Process',	'Notes',	'Tags',
+                 'Next Steps', 'Demo', 'UAT', 'PROD', 'Manual', 'Accept', 'Customer Face',	'Process',	'Notes',	'Tags',
                  'Assigned To', 'Stage', 'Product', 'Module']
   @tcases.each do |line|
     demo = line.tags.include?("DEMO") ? "Y" : "" unless line.tags.nil?
     uat = line.tags.include?("UAT") ? "Y" : "" unless line.tags.nil?
     prod = line.tags.include?("PROD") ? "Y" : "" unless line.tags.nil?
+    man = line.tags.include?("MANUAL") ? "Y" : "" unless line.tags.nil?
+    acc = line.tags.include?("ACCEPT") ? "Y" : "" unless line.tags.nil?
+    cus = line.tags.include?("CUSTOMER") ? "Y" : "" unless line.tags.nil?    
     sheet.add_row [line.case_no,	line.subject,	line.priority, line.status, line.previous_status, 
-                   line.next_steps, demo, uat, prod, line.test_case&.title, line.notes, line.tags,    
+                   line.next_steps, demo, uat, prod, man, acc, cus, line.test_case&.title, line.notes, line.tags,    
                   line.assigned_to, line.stage, line.product, line.module]
   end
 end
